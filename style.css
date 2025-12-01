@@ -98,9 +98,7 @@ input:focus, select:focus {
     border-radius: 14px;
     box-shadow: 0 4px 14px rgba(0,0,0,0.08);
     transition: all .35s ease;
-    opacity: 0;
-    transform: translateY(15px);
-    animation: fadeUp .7s ease forwards;
+    break-inside: avoid;
 }
 
 .card img {
@@ -252,71 +250,6 @@ footer {
 
 #formMensagem button:hover {
     background: #b0906f;
-}
-
-.confirm-wrapper {
-  max-width: 500px;
-  margin: 40px auto;
-  padding: 25px;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 5px 25px rgba(0,0,0,0.1);
-  text-align: center;
-  animation: fadeIn 0.4s ease;
-}
-
-.confirm-buttons {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-  margin: 20px 0;
-}
-
-.confirm-btn {
-  padding: 12px 20px;
-  border-radius: 12px;
-  font-size: 1rem;
-  cursor: pointer;
-  border: none;
-  transition: 0.3s;
-}
-
-.btn-yes {
-  background: #4CAF50;
-  color: white;
-}
-
-.btn-no {
-  background: #dc3545;
-  color: white;
-}
-
-#formMensagem {
-  margin-top: 25px;
-  text-align: left;
-}
-
-#formMensagem input,
-#formMensagem textarea {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  font-size: 1rem;
-}
-
-#formMensagem button {
-  width: 100%;
-  background: #4CAF50;
-  color: white;
-  border: none;
-  padding: 12px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 1rem;
-  margin-top: 10px;
-  transition: 0.3s;
 }
 
 @keyframes fadeIn {

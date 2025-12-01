@@ -1,129 +1,82 @@
-/* ===============================
-           RESET / BASE
-=================================*/
+/* ======== RESET ======== */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Inter", Arial, sans-serif;
 }
 
 body {
-    background: #f7f7f7;
+    font-family: "Inter", Arial, sans-serif;
+    background: #f4f1ed;
     color: #333;
+    line-height: 1.6;
 }
 
-/* ===============================
-             HEADER
-=================================*/
+/* ======== HEADER ======== */
 header {
-    background: #ffffff;
-    padding: 18px 30px;
+    background: #d8c9b5;
+    padding: 18px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #ddd;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-    position: sticky;
-    top: 0;
-    z-index: 10;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.12);
 }
 
-header h1 {
-    font-size: 1.4rem;
-}
-
-header nav a {
-    margin-left: 16px;
+header a {
+    color: #3b3025;
     text-decoration: none;
-    font-weight: 600;
-    color: #333;
-    transition: .25s;
-}
-header nav a:hover {
-    color: #4CAF50;
+    font-weight: bold;
 }
 
-/* ===============================
-               HERO
-=================================*/
+nav a {
+    margin-left: 18px;
+}
+
+/* ======== HERO ======== */
 .hero {
-    padding: 50px 20px;
     text-align: center;
-    background: #ffffff;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #eee;
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #efe9e2, #f7f3ee);
+    animation: fadeIn 1s ease;
 }
 
 .hero h2 {
-    font-size: 2rem;
-    margin-bottom: 10px;
+    font-size: 32px;
+    font-weight: 700;
 }
 
-/* ===============================
-            INSTRUÇÃO
-=================================*/
-.instrucao-container {
-    background: #fff;
-    padding: 22px 18px;
-    margin: 0 auto 25px auto;
-    width: min(900px, 95%);
-    border-radius: 14px;
-    box-shadow: 0 6px 22px rgba(0,0,0,0.06);
-    border-left: 6px solid #4CAF50;
-}
-
-.instrucao-container p {
-    font-size: 1.05rem;
-    line-height: 1.5;
-}
-
-.instrucao-container strong {
-    color: #2E7D32;
-}
-
-/* ===============================
-              FILTROS
-=================================*/
+/* ======== INPUTS/FILTROS ======== */
 .filters {
     display: flex;
     justify-content: center;
-    gap: 15px;
-    margin: 20px auto;
-    width: min(1000px, 95%);
+    gap: 12px;
+    padding: 25px;
 }
 
-.filters input,
-.filters select {
-    padding: 12px 14px;
-    border-radius: 12px;
-    border: 1px solid #ccc;
-    width: 45%;
-    font-size: 1rem;
+input, select {
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: 1px solid #cfc6b7;
+    background: white;
+    font-size: 16px;
+    transition: .3s ease;
 }
 
-/* ===============================
-          SEÇÃO DE PRODUTOS
-=================================*/
-.produtos {
-    width: min(1300px, 95%);
-    margin: 0 auto;
+input:focus, select:focus {
+    outline: none;
+    border-color: #b49f84;
+    box-shadow: 0 0 8px rgba(178,160,133,.4);
 }
 
-.produtos h2 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* ===============================
-       MASONRY GRID MODERNO
-=================================*/
+/* ======== MASONRY GRID ======== */
 .grid {
     column-count: 3;
-    column-gap: 24px;
-    padding: 20px;
+    column-gap: 20px;
+    padding: 30px;
 }
 
+/* Ajuste responsivo */
 @media (max-width: 900px) {
     .grid {
         column-count: 2;
@@ -135,82 +88,289 @@ header nav a:hover {
     }
 }
 
-/* ===============================
-               CARDS
-=================================*/
+/* ======== CARDS ======== */
 .card {
-    background: white;
-    display: inline-block;
+    background: #ffffff;
+    display: inline-block; /* Necessário para masonry */
     width: 100%;
-    margin-bottom: 24px;
+    margin: 0 0 20px;
     padding: 18px;
-    border-radius: 18px;
-    box-shadow: 0 6px 22px rgba(0,0,0,0.08);
-    overflow: hidden;
-    break-inside: avoid;
-    transform: translateY(20px);
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    transition: all .35s ease;
     opacity: 0;
-    animation: cardFade .6s ease forwards;
+    transform: translateY(15px);
+    animation: fadeUp .7s ease forwards;
 }
 
 .card img {
     width: 100%;
-    border-radius: 14px;
-    margin-bottom: 12px;
-    transition: transform .3s ease;
+    border-radius: 12px;
+    transition: .3s ease;
+}
+
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 22px rgba(0,0,0,0.12);
 }
 
 .card:hover img {
     transform: scale(1.03);
 }
 
-.card h3 {
-    font-size: 1.1rem;
-    margin-bottom: 8px;
-    font-weight: 600;
-}
-
-.card p {
-    font-size: 0.95rem;
-    margin-bottom: 12px;
-    color: #444;
-}
-
-/* Botão */
-.card .btn {
-    display: block;
-    text-align: center;
-    background: #4CAF50;
-    padding: 12px;
-    color: #fff;
+/* ======== BOTÃO ======== */
+.btn {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: #c4a98a;
+    color: white;
+    border-radius: 10px;
     text-decoration: none;
-    border-radius: 12px;
-    font-size: 1rem;
-    transition: background .25s, transform .25s;
+    transition: .3s;
 }
 
-.card .btn:hover {
-    background: #3e8f43;
-    transform: scale(1.03);
+.btn:hover {
+    background: #b0906f;
 }
 
-/* ===============================
-        ANIMAÇÃO SUAVE
-=================================*/
-@keyframes cardFade {
+/* ======== FOOTER ======== */
+footer {
+    background: #d8c9b5;
+    padding: 20px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+/* ======== ANIMAÇÕES ======== */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes fadeUp {
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-/* ===============================
-             FOOTER
-=================================*/
-footer {
+/* ======== CONFIRMAÇÃO - LAYOUT ======== */
+
+.confirm-wrapper {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 35px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    animation: fadeUp .6s ease forwards;
     text-align: center;
-    padding: 20px;
+}
+
+.confirm-wrapper h2 {
+    font-size: 26px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.confirm-wrapper h3 {
+    font-size: 20px;
+    color: #6a5d4d;
+    margin-bottom: 25px;
+}
+
+/* Botões */
+.confirm-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.confirm-btn {
+    padding: 12px 22px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .3s ease;
+    font-weight: 600;
+}
+
+.btn-yes {
+    background: #b2d8b2;
+    color: #224422;
+}
+
+.btn-yes:hover {
+    background: #9acd9a;
+}
+
+.btn-no {
+    background: #e8b2b2;
+    color: #5a1e1e;
+}
+
+.btn-no:hover {
+    background: #e09999;
+}
+
+.oculto {
+  display: none;
+}
+
+/* Formulário */
+#formMensagem {
+    margin-top: 30px;
+    text-align: left;
+}
+
+#formMensagem input,
+#formMensagem textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #cfc6b7;
+    font-size: 16px;
+    margin-bottom: 18px;
+    background: #faf8f6;
+}
+
+#formMensagem button {
+    width: 100%;
+    padding: 14px;
+    background: #c4a98a;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: .3s ease;
+}
+
+#formMensagem button:hover {
+    background: #b0906f;
+}
+
+.confirm-wrapper {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+  text-align: center;
+  animation: fadeIn 0.4s ease;
+}
+
+.confirm-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.confirm-btn {
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  transition: 0.3s;
+}
+
+.btn-yes {
+  background: #4CAF50;
+  color: white;
+}
+
+.btn-no {
+  background: #dc3545;
+  color: white;
+}
+
+#formMensagem {
+  margin-top: 25px;
+  text-align: left;
+}
+
+#formMensagem input,
+#formMensagem textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+#formMensagem button {
+  width: 100%;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 10px;
+  transition: 0.3s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* TIMELINE DE INSTRUÇÕES */
+/* Instrução acima da lista */
+.instrucao-endereco {
+    max-width: 700px;
+    margin: 20px auto 10px;
     background: #fff;
-    margin-top: 40px;
-    border-top: 1px solid #ddd;
+    padding: 20px 25px;
+    border-radius: 14px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.instrucao-endereco p {
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.endereco-box {
+    background: #f5f1e8;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 600;
+    border-left: 5px solid #c4b38b;
+}
+
+
+/* animação */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* responsividade */
+@media (max-width: 600px) {
+  .step {
+    grid-template-columns: 50px auto;
+  }
+  .step-icon {
+    width: 50px;
+    height: 50px;
+  }
+  .step-icon img {
+    width: 28px;
+    height: 28px;
+  }
 }

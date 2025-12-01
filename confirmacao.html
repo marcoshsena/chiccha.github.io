@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmação de Presente</title>
+  <style>
+    body { margin:0; font-family: Arial, sans-serif; background:#f4f4f4; }
+    header { background:#c5e4ff; padding:20px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
+    header a { text-decoration:none; color:#333; }
+    nav a { margin:0 10px; text-decoration:none; color:#333; font-weight:bold; }
+    main { padding:40px 20px; max-width:800px; margin:auto; text-align:center; }
+    button { padding:12px 20px; border:none; border-radius:12px; cursor:pointer; font-size:16px; margin:10px; }
+    .sim { background:#b2ffb2; }
+    .nao { background:#ffb2b2; }
+    textarea { width:100%; height:120px; margin-top:20px; padding:10px; border-radius:10px; font-size:16px; }
+    .oculto { display:none; }
+    footer { background:#c5e4ff; padding:20px; text-align:center; margin-top:40px; }
+  </style>
+
+  <script>
+    function mostrarFormulario() {
+      document.getElementById("formMensagem").classList.remove("oculto");
+    }
+    function voltarHome() {
+      window.location.href = "index.html";
+    }
+
+    function carregarProduto() {
+      const params = new URLSearchParams(window.location.search);
+      const produto = params.get("produto");
+      const nomeProduto = document.getElementById("nomeProduto");
+      if (produto) nomeProduto.innerText = produto;
+    }
+
+    function enviarMensagem() {
+      const params = new URLSearchParams(window.location.search);
+      const produto = params.get("produto");
+    
+      const nome = document.getElementById("nome").value.trim();
+      const mensagem = document.getElementById("mensagem").value.trim();
+    
+      if (!nome || !mensagem) {
+        alert("Por favor, preencha seu nome e a mensagem.");
+        return;
+      }
+    
+      fetch("https://script.google.com/macros/s/AKfycbwhVdSqF769s4maVCUlyZfQ46bx44ayYyz4LLW9F_T_224cfjzi1Du6fRLsHIS16Yg0/exec", {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify({
+          produto: produto,
+          nome: nome,
+          mensagem: mensagem
+        })
+      });
+    
+      alert("Mensagem enviada com sucesso! Obrigado ❤️");
+      window.location.href = "index.html";
+    }
+  </script>
+</head>
+
+<body onload="carregarProduto()">
+
+<header>
+  <h1><a href="index.html">HomeGift - Casa Nova</a></h1>
+  <nav>
+    <a href="lista.html">Lista</a>
+    <a href="categorias.html">Categorias</a>
+  </nav>
+</header>
+
+<main>
+  <h2>Você escolheu este presente?</h2>
+  <h3 id="nomeProduto"></h3>
+
+  <button class="sim" onclick="mostrarFormulario()">Sim, comprei</button>
+  <button class="nao" onclick="voltarHome()">Não</button>
+
+  <div id="formMensagem" class="oculto">
+  <h3>Deixe seu nome e uma mensagem para desejar boa sorte na casa nova:</h3>
+
+  <input 
+    type="text" 
+    id="nome" 
+    placeholder="Seu nome"
+    style="width:100%; padding:12px; border-radius:10px; border:1px solid #ccc; font-size:16px; margin-top:10px;"
+  >
+
+  <textarea 
+    id="mensagem" 
+    placeholder="Escreva sua mensagem..."
+    style="width:100%; height:120px; margin-top:20px; padding:10px; border-radius:10px; font-size:16px; border:1px solid #ccc;"
+  ></textarea>
+
+  <br><br>
+  <button class="sim" onclick="enviarMensagem()">Enviar Mensagem</button>
+</div>
+
+</main>
+
+<footer>
+  © 2025 HomeGift - Casa Nova
+</footer>
+
+</body>
+</html>

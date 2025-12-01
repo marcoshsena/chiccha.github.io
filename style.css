@@ -154,4 +154,100 @@ footer {
     }
 }
 
+/* ======== CONFIRMAÇÃO - LAYOUT ======== */
+
+.confirm-wrapper {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 35px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    animation: fadeUp .6s ease forwards;
+    text-align: center;
+}
+
+.confirm-wrapper h2 {
+    font-size: 26px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.confirm-wrapper h3 {
+    font-size: 20px;
+    color: #6a5d4d;
+    margin-bottom: 25px;
+}
+
+/* Botões */
+.confirm-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.confirm-btn {
+    padding: 12px 22px;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .3s ease;
+    font-weight: 600;
+}
+
+.btn-yes {
+    background: #b2d8b2;
+    color: #224422;
+}
+
+.btn-yes:hover {
+    background: #9acd9a;
+}
+
+.btn-no {
+    background: #e8b2b2;
+    color: #5a1e1e;
+}
+
+.btn-no:hover {
+    background: #e09999;
+}
+
+/* Formulário */
+#formMensagem {
+    margin-top: 30px;
+    text-align: left;
+}
+
+#formMensagem input,
+#formMensagem textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #cfc6b7;
+    font-size: 16px;
+    margin-bottom: 18px;
+    background: #faf8f6;
+}
+
+#formMensagem button {
+    width: 100%;
+    padding: 14px;
+    background: #c4a98a;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 17px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: .3s ease;
+}
+
+#formMensagem button:hover {
+    background: #b0906f;
+}
+
+
 

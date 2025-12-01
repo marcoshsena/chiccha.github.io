@@ -60,33 +60,35 @@
 </header>
 
 <main>
-  <h2>Você escolheu este presente?</h2>
-  <h3 id="nomeProduto"></h3>
+  <div class="confirm-wrapper">
 
-  <button class="sim" onclick="mostrarFormulario()">Sim, comprei</button>
-  <button class="nao" onclick="voltarHome()">Não</button>
+    <h2>Você comprou este item?</h2>
+    <h3 id="nomeProduto"></h3>
 
-  <div id="formMensagem" class="oculto">
-  <h3>Deixe seu nome e uma mensagem para desejar boa sorte na casa nova:</h3>
+    <div class="confirm-buttons">
+      <button class="confirm-btn btn-yes" onclick="mostrarFormulario()">Sim, comprei!</button>
+      <button class="confirm-btn btn-no" onclick="voltarHome()">Não</button>
+    </div>
 
-  <input 
-    type="text" 
-    id="nome" 
-    placeholder="Seu nome"
-    style="width:100%; padding:12px; border-radius:10px; border:1px solid #ccc; font-size:16px; margin-top:10px;"
-  >
+    <div id="formMensagem" class="oculto">
+      <h3>Deixe seu nome e uma mensagem:</h3>
 
-  <textarea 
-    id="mensagem" 
-    placeholder="Escreva sua mensagem..."
-    style="width:100%; height:120px; margin-top:20px; padding:10px; border-radius:10px; font-size:16px; border:1px solid #ccc;"
-  ></textarea>
+      <input 
+        type="text" 
+        id="nome" 
+        placeholder="Seu nome">
+      
+      <textarea 
+        id="mensagem"
+        placeholder="Escreva uma mensagem bonita para o casal..."></textarea>
 
-  <br><br>
-  <button class="sim" onclick="enviarMensagem()">Enviar Mensagem</button>
-</div>
+      <button onclick="enviarMensagem()">Enviar Mensagem</button>
 
+    </div>
+
+  </div>
 </main>
+
 
 <footer>
   © 2025 HomeGift - Casa Nova

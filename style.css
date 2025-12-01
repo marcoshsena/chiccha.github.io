@@ -1,162 +1,157 @@
-/* ===========================
-   COZY HOME – PALETA DE CORES
-   =========================== */
-
-:root {
-    --primaria: #B88E6A;
-    --secundaria: #F3EDE3;
-    --destaque: #8C6746;
-    --fundo: #FAF7F3;
-    --texto: #4A3F35;
-    --branco: #ffffff;
-
-    --sombra: 0 3px 10px rgba(0,0,0,0.08);
-}
-
-/* ===========================
-   RESET E BASE
-   =========================== */
-body {
+/* ======== RESET ======== */
+* {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    background: var(--fundo);
-    color: var(--texto);
+    box-sizing: border-box;
 }
 
-/* ===========================
-   HEADER
-   =========================== */
+body {
+    font-family: "Inter", Arial, sans-serif;
+    background: #f4f1ed;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* ======== HEADER ======== */
 header {
-    background: var(--secundaria);
-    padding: 20px;
+    background: #d8c9b5;
+    padding: 18px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: var(--sombra);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.12);
 }
 
-header h1 a {
+header a {
+    color: #3b3025;
     text-decoration: none;
-    color: var(--destaque);
-}
-
-nav a {
-    margin: 0 10px;
-    text-decoration: none;
-    color: var(--destaque);
     font-weight: bold;
 }
 
-/* ===========================
-   HERO
-   =========================== */
-.hero {
-    background: var(--secundaria);
-    padding: 60px 20px;
-    text-align: center;
+nav a {
+    margin-left: 18px;
 }
 
-/* ===========================
-   FILTROS
-   =========================== */
+/* ======== HERO ======== */
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #efe9e2, #f7f3ee);
+    animation: fadeIn 1s ease;
+}
+
+.hero h2 {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+/* ======== INPUTS/FILTROS ======== */
 .filters {
     display: flex;
     justify-content: center;
-    gap: 15px;
-    padding: 20px;
+    gap: 12px;
+    padding: 25px;
 }
 
-.filters input,
-.filters select {
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    background: var(--branco);
+input, select {
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: 1px solid #cfc6b7;
+    background: white;
+    font-size: 16px;
+    transition: .3s ease;
 }
 
-/* ===========================
-   CARDS E GRID DE PRODUTOS
-   =========================== */
-.produtos {
-    padding: 40px 20px;
+input:focus, select:focus {
+    outline: none;
+    border-color: #b49f84;
+    box-shadow: 0 0 8px rgba(178,160,133,.4);
 }
 
+/* ======== MASONRY GRID ======== */
 .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
+    column-count: 3;
+    column-gap: 20px;
+    padding: 30px;
 }
 
+/* Ajuste responsivo */
+@media (max-width: 900px) {
+    .grid {
+        column-count: 2;
+    }
+}
+@media (max-width: 600px) {
+    .grid {
+        column-count: 1;
+    }
+}
+
+/* ======== CARDS ======== */
 .card {
-    background: var(--branco);
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: var(--sombra);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    background: #ffffff;
+    display: inline-block; /* Necessário para masonry */
+    width: 100%;
+    margin: 0 0 20px;
+    padding: 18px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    transition: all .35s ease;
+    opacity: 0;
+    transform: translateY(15px);
+    animation: fadeUp .7s ease forwards;
 }
 
 .card img {
     width: 100%;
-    border-radius: 10px;
+    border-radius: 12px;
+    transition: .3s ease;
 }
 
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 22px rgba(0,0,0,0.12);
+}
+
+.card:hover img {
+    transform: scale(1.03);
+}
+
+/* ======== BOTÃO ======== */
 .btn {
     display: inline-block;
-    margin-top: 10px;
-    background: var(--primaria);
-    padding: 12px 18px;
-    color: var(--branco);
-    border-radius: 8px;
+    margin-top: 12px;
+    padding: 12px 16px;
+    background: #c4a98a;
+    color: white;
+    border-radius: 10px;
     text-decoration: none;
-    font-weight: bold;
-    transition: 0.2s;
+    transition: .3s;
 }
 
 .btn:hover {
-    background: var(--destaque);
+    background: #b0906f;
 }
 
-/* ===========================
-   FOOTER
-   =========================== */
+/* ======== FOOTER ======== */
 footer {
-    background: var(--secundaria);
+    background: #d8c9b5;
     padding: 20px;
     text-align: center;
     margin-top: 40px;
-    color: var(--destaque);
 }
 
-/* ===========================
-   CONFIRMAÇÃO
-   =========================== */
-button.sim {
-    background: #C6E8C6;
+/* ======== ANIMAÇÕES ======== */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
-button.nao {
-    background: #E8C6C6;
-}
-
-textarea,
-input[type="text"] {
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    padding: 12px;
-}
-
-/* ===========================
-   RESPONSIVIDADE
-   =========================== */
-
-@media (max-width: 600px) {
-    .filters {
-        flex-direction: column;
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
+
+

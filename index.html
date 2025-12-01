@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HomeGift - Presentes de Casa Nova</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; background: #f4f4f4; }
+        header { background: #c5e4ff; padding: 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        nav a { margin: 0 10px; text-decoration: none; color: #333; font-weight: bold; }
+        .hero { text-align: center; padding: 60px 20px; background: #e9f4ff; }
+        .filters { display: flex; justify-content: center; gap: 15px; padding: 20px; }
+        select, input { padding: 10px; border-radius: 8px; border: 1px solid #ccc; }
+        .produtos { padding: 40px 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+        .card img { width: 100%; border-radius: 10px; }
+        .btn { display: inline-block; margin-top: 10px; background: #5da8ff; padding: 10px 15px; color: white; border-radius: 8px; text-decoration: none; }
+        footer { background: #c5e4ff; padding: 20px; text-align: center; margin-top: 40px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1><a href="#home" style="text-decoration:none; color:#333;">HomeGift - Casa Nova</a></h1>
+    <nav>
+        <a href="lista.html">Lista</a>
+        <a href="categorias.html">Categorias</a>
+    </nav>
+</header>
+
+<section class="hero" id="home">
+    <h2>Bem-vindo à Lista de Presentes da Casa Nova</h2>
+    <p>Escolha um presente especial para ajudar a montar o novo lar!</p>
+</section>
+
+<section class="filters">
+    <input type="text" id="search" placeholder="Pesquisar produtos..." oninput="filterProducts()" />
+    <select id="categoryFilter" onchange="filterProducts()">
+        <option value="all">Todas Categorias</option>
+        <option value="cozinha">Cozinha</option>
+        <option value="decoracao">Decoração</option>
+        <option value="lavanderia">Lavanderia</option>
+        <option value="sala">Sala de Estar</option>
+    </select>
+</section>
+
+<section class="produtos" id="lista">
+    <h2>Lista de Presentes</h2>
+
+    <div class="grid" id="productGrid">
+
+        <div class="card" data-category="cozinha" data-name="Panela Antiaderente Conjunto Premium 5 Peças">
+            <img src="https://via.placeholder.com/300x200?text=Panela+Premium" />
+            <h3>Conjunto de Panelas Antiaderentes</h3>
+            <p>Perfeito para iniciar a cozinha nova!</p>
+            <a class="btn"
+               href="https://mercadolivre.com/sec/EXEMPLO1"
+               target="_blank"
+               onclick="setTimeout(() => { window.location.href='confirmacao.html?produto=Conjunto%20de%20Panelas'; }, 800);">
+               Ver Oferta
+            </a>
+        </div>
+
+        <div class="card" data-category="decoracao" data-name="quadro decorativo casa nova moderno sala">
+            <img src="https://via.placeholder.com/300x200?text=Quadro+Decorativo" />
+            <h3>Quadro Decorativo Moderno</h3>
+            <p>Ideal para deixar o ambiente aconchegante.</p>
+            <a class="btn" href="#">Ver Oferta</a>
+        </div>
+
+        <div class="card" data-category="lavanderia" data-name="kit lavanderia organizacao cestos">
+            <img src="https://via.placeholder.com/300x200?text=Kit+Lavanderia" />
+            <h3>Kit de Organização para Lavanderia</h3>
+            <p>Ajuda a manter tudo no lugar no novo lar.</p>
+            <a class="btn" href="#">Ver Oferta</a>
+        </div>
+
+        <div class="card" data-category="sala" data-name="lampada inteligente alexa wifi">
+            <img src="https://via.placeholder.com/300x200?text=Lâmpada+Inteligente" />
+            <h3>Lâmpada Inteligente Wi-Fi</h3>
+            <p>Controle pelo celular e deixe a sala mais moderna.</p>
+            <a class="btn" href="#">Ver Oferta</a>
+        </div>
+
+    </div>
+</section>
+
+<footer>
+    <p>© 2025 HomeGift - Casa Nova</p>
+</footer>
+
+<script>
+function filterProducts() {
+    const search = document.getElementById("search").value.toLowerCase();
+    const category = document.getElementById("categoryFilter").value;
+    const cards = document.querySelectorAll(".card");
+
+    cards.forEach(card => {
+        const name = card.getAttribute("data-name");
+        const cat = card.getAttribute("data-category");
+
+        const matchName = name.includes(search);
+        const matchCategory = category === "all" || cat === category;
+
+        card.style.display = matchName && matchCategory ? "block" : "none";
+    });
+}
+</script>
+
+</body>
+</html>

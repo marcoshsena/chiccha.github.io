@@ -1,9 +1,15 @@
-// Import SDK via CDN (não precisa de import ES6 com servidor)
+// Import SDK via CDN
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { 
+  getAuth, 
+  signInWithEmailAndPassword, 
+  onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { 
+  initializeFirestore 
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-// Configuração do seu projeto
+// Config Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyDw1C5HUtpHXD6Q-xdmV2lwvvEVcndLD4w",
   authDomain: "chiccha-a1c87.firebaseapp.com",
@@ -17,6 +23,12 @@ const firebaseConfig = {
 // Inicializa Firebase
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-export const db = getFirestore(app);
 
+// 🔥 AQUI É A PARTE IMPORTANTE
+export const db = initializeFirestore(app, {
+  databaseId: "chiccha"  // <-- SEU BANCO NÃO PADRÃO
+});
+
+// Exporta funções
 export { signInWithEmailAndPassword, onAuthStateChanged };
+

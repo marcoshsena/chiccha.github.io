@@ -6,52 +6,12 @@
   <title>Confirmação de Presente</title>
   <link rel="stylesheet" href="style.css">
 
-  <script>
-    function mostrarFormulario() {
-      document.getElementById("formMensagem").classList.remove("oculto");
-    }
-    function voltarHome() {
-      window.location.href = "index.html";
-    }
-
-    function carregarProduto() {
-      const params = new URLSearchParams(window.location.search);
-      const produto = params.get("produto");
-      const nomeProduto = document.getElementById("nomeProduto");
-      if (produto) nomeProduto.innerText = produto;
-    }
-
-    function enviarMensagem() {
-      const params = new URLSearchParams(window.location.search);
-      const produto = params.get("produto");
-    
-      const nome = document.getElementById("nome").value.trim();
-      const mensagem = document.getElementById("mensagem").value.trim();
-    
-      if (!nome || !mensagem) {
-        alert("Por favor, preencha seu nome e a mensagem.");
-        return;
-      }
-    
-      fetch("https://script.google.com/macros/s/AKfycbwhVdSqF769s4maVCUlyZfQ46bx44ayYyz4LLW9F_T_224cfjzi1Du6fRLsHIS16Yg0/exec", {
-        method: "POST",
-        mode: "no-cors",
-        body: JSON.stringify({
-          produto: produto,
-          nome: nome,
-          mensagem: mensagem
-        })
-      });
-    
-      alert("Mensagem enviada com sucesso! Obrigado ❤️");
-      window.location.href = "index.html";
-    }
-  </script>
+  <!-- Firebase + lógica -->
   <script type="module" src="js/firebase.js"></script>
   <script type="module" src="js/confirmacao.js"></script>
 </head>
 
-<body onload="carregarProduto()">
+<body>
 
 <header>
   <h1><a href="index.html">HomeGift - Casa Nova</a></h1>
@@ -68,8 +28,8 @@
     <h3 id="nomeProduto"></h3>
 
     <div class="confirm-buttons">
-      <button class="confirm-btn btn-yes" onclick="mostrarFormulario()">Sim, comprei!</button>
-      <button class="confirm-btn btn-no" onclick="voltarHome()">Não</button>
+      <button class="confirm-btn btn-yes" id="btnSim">Sim, comprei!</button>
+      <button class="confirm-btn btn-no" id="btnNao">Não</button>
     </div>
 
     <div id="formMensagem" class="oculto">
@@ -79,7 +39,7 @@
         type="text" 
         id="nome" 
         placeholder="Seu nome">
-      
+
       <textarea 
         id="mensagem"
         placeholder="Escreva uma mensagem bonita para o casal..."></textarea>
@@ -91,10 +51,10 @@
   </div>
 </main>
 
-
 <footer>
   © 2025 HomeGift - Casa Nova
 </footer>
 
 </body>
 </html>
+

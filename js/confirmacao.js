@@ -1,82 +1,66 @@
-import { db } from "./js/firebase.js";
-import { 
-    doc, setDoc, addDoc, collection, getDoc 
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { db } from "./firebase.js";
+import { doc, getDoc, setDoc, collection, addDoc } 
+from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-const params = new URLSearchParams(window.location.search);
-const produto = params.get("produto");
-
-// Preenche o nome do produto ao carregar
 document.addEventListener("DOMContentLoaded", async () => {
+
+    const params = new URLSearchParams(window.location.search);
+    const produto = params.get("produto");
     document.getElementById("nomeProduto").innerText = produto;
-});
 
+    const btnSim = document.getElementById("btnSim");
+    const btnNao = document.getElementById("btnNao");
+    const form = document.getElementById("formMensagem");
+    const btnEnviar = document.getElementById("btnEnviar");
 
-/* ============================================
-   ➤ Impedir compras duplicadas
-   Se o produto já estiver marcado como comprado,
-   o formulário será bloqueado.
-   ============================================ */
-async function verificarDisponibilidade() {
-    const ref = doc(db, "produtos", produto);
-    const snap = await getDoc(ref);
+    // Verificar se o produto já foi comprado
+    const docRef = doc(db, "produtos", produto);
+    const snap = await getDoc(docRef);
 
     if (snap.exists() && snap.data().comprado === true) {
-        alert("Este presente já foi confirmado por outra pessoa. Muito obrigado!");
-        window.location.href = "lista.html";
-        return false;
-    }
-    return true;
-}
-
-
-/* ============================================
-   ➤ Mostrar formulário quando clicar "Sim, comprei!"
-   ============================================ */
-document.querySelector(".btn-yes").addEventListener("click", async () => {
-    const disponivel = await verificarDisponibilidade();
-    if (disponivel) {
-        document.getElementById("formMensagem").classList.remove("oculto");
-    }
-});
-
-
-/* ============================================
-   ➤ Enviar mensagem + registrar compra
-   ============================================ */
-document.getElementById("btnEnviar").addEventListener("click", async () => {
-
-    const nome = document.getElementById("nome").value.trim();
-    const mensagem = document.getElementById("mensagem").value.trim();
-
-    if (!nome || !mensagem) {
-        alert("Por gentileza, preencha o seu nome e a mensagem.");
-        return;
+        btnSim.disabled = true;
+        btnSim.innerText = "Já foi comprado ❤️";
     }
 
-    // Verifica novamente antes de gravar
-    const disponivel = await verificarDisponibilidade();
-    if (!disponivel) return;
-
-    // Marca o produto como comprado
-    await setDoc(doc(db, "produtos", produto), {
-        comprado: true,
-        comprador: nome,
-        data: new Date().toISOString()
+    // Botão "Sim, comprei!" abre o formulário
+    btnSim.addEventListener("click", () => {
+        form.classList.remove("oculto");
     });
 
-    // Salva a mensagem para o painel admin
-    await addDoc(collection(db, "mensagens"), {
-        produto: produto,
-        nome: nome,
-        mensagem: mensagem,
-        data: new Date().toISOString()
+    // Botão "Não" volta para home
+    btnNao.addEventListener("click", () => {
+        window.location.href = "index.html";
     });
 
-    // Confirmação estilizada
-    alert("Obrigado por fazer parte desse nosso sonho! ❤️✨");
+    // Enviar mensagem + registrar compra
+    btnEnviar.addEventListener("click", async () => {
+        const nome = document.getElementById("nome").value.trim();
+        const mensagem = document.getElementById("mensagem").value.trim();
 
-    // Retorna à página inicial
-    window.location.href = "index.html";
+        if (!nome || !mensagem) {
+            alert("Preencha seu nome e a mensagem!");
+            return;
+        }
+
+        // Salvar compra
+        await setDoc(doc(db, "produtos", produto), {
+            comprado: true,
+            comprador: nome,
+            data: new Date().toISOString()
+        });
+
+        // Registrar mensagem
+        await addDoc(collection(db, "mensagens"), {
+            produto: produto,
+            nome: nome,
+            mensagem: mensagem,
+            data: new Date().toISOString()
+        });
+
+        // Mensagem linda de agradecimento
+        alert("Obrigado por fazer parte desse nosso sonho! ❤️💛");
+
+        // Redirecionar
+        window.location.href = "index.html";
+    });
 });
-

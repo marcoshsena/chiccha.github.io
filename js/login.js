@@ -1,4 +1,4 @@
-import { auth, signInWithEmailAndPassword } from "./js/firebase.js";
+import { auth, signInWithEmailAndPassword } from "./firebase.js";
 
 window.login = async function () {
   const email = document.getElementById("email").value.trim();

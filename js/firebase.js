@@ -1,24 +1,8 @@
-// Import SDK via CDN
+// js/firebase.js
+// SDK via CDN (ES modules)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-import {
-  initializeFirestore,
-  collection,
-  doc,
-  getDoc,
-  setDoc,
-  addDoc,
-  updateDoc,
-  serverTimestamp,
-  onSnapshot,
-  query,
-  orderBy
-} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDw1C5HUtpHXD6Q-xdmV2lwvvEVcndLD4w",
@@ -30,27 +14,6 @@ const firebaseConfig = {
   measurementId: "G-C01WMT2WQ2"
 };
 
-// Inicializa Firebase
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-
-// 🔥 FIRESTORE USANDO DATABASE PERSONALIZADO
-export const db = initializeFirestore(app, {
-  databaseId: "chiccha"
-});
-
-// REEXPORTA TUDO
-export {
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  collection,
-  doc,
-  getDoc,
-  setDoc,
-  addDoc,
-  updateDoc,
-  serverTimestamp,
-  onSnapshot,
-  query,
-  orderBy
-};
+export const db = getFirestore(app);

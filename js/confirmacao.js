@@ -1,66 +1,100 @@
-import { db } from "./js/firebase.js";
-import { doc, getDoc, setDoc, collection, addDoc } 
-from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+// js/confirmacao.js
+import { db } from "./firebase.js";
+import {
+  doc,
+  getDoc,
+  setDoc,
+  addDoc,
+  collection,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-document.addEventListener("DOMContentLoaded", async () => {
+const params = new URLSearchParams(window.location.search);
+const produto = params.get("produto") || "Produto desconhecido";
 
-    const params = new URLSearchParams(window.location.search);
-    const produto = params.get("produto");
-    document.getElementById("nomeProduto").innerText = produto;
+function $id(id){ return document.getElementById(id); }
 
-    const btnSim = document.getElementById("btnSim");
-    const btnNao = document.getElementById("btnNao");
-    const form = document.getElementById("formMensagem");
-    const btnEnviar = document.getElementById("btnEnviar");
+document.addEventListener("DOMContentLoaded", () => {
+  // preenche o nome do produto
+  $id("nomeProduto").innerText = produto;
 
-    // Verificar se o produto já foi comprado
-    const docRef = doc(db, "produtos", produto);
-    const snap = await getDoc(docRef);
+  // botões
+  $id("btnSim").addEventListener("click", abrirFormulario);
+  $id("btnNao").addEventListener("click", () => { window.location.href = "index.html"; });
 
-    if (snap.exists() && snap.data().comprado === true) {
-        btnSim.disabled = true;
-        btnSim.innerText = "Já foi comprado ❤️";
+  // enviar
+  $id("btnEnviar").addEventListener("click", enviarMensagem);
+});
+
+function abrirFormulario() {
+  const form = $id("formMensagem");
+  form.classList.remove("oculto");
+  form.setAttribute("aria-hidden", "false");
+  // opcional: focar no campo nome
+  $id("nome").focus();
+}
+
+async function enviarMensagem(e) {
+  e.preventDefault();
+
+  const btn = $id("btnEnviar");
+  const nome = $id("nome").value.trim();
+  const mensagem = $id("mensagem").value.trim();
+
+  if (!nome || !mensagem) {
+    alert("Por favor, preencha seu nome e a mensagem.");
+    return;
+  }
+
+  try {
+    // desativa botão para evitar múltiplos cliques
+    btn.disabled = true;
+    btn.innerText = "Enviando...";
+
+    // primeiro: verifica se o produto já foi marcado como comprado
+    const prodRef = doc(db, "produtos", produto);
+    const prodSnap = await getDoc(prodRef);
+
+    if (prodSnap.exists() && prodSnap.data().comprado === true) {
+      alert("Desculpe — este produto já foi marcado como comprado por outra pessoa.");
+      btn.disabled = false;
+      btn.innerText = "Enviar Mensagem";
+      return;
     }
 
-    // Botão "Sim, comprei!" abre o formulário
-    btnSim.addEventListener("click", () => {
-        form.classList.remove("oculto");
+    // marca o produto como comprado (create/update)
+    await setDoc(prodRef, {
+      comprado: true,
+      comprador: nome,
+      produto: produto,
+      timestamp: new Date().toISOString()
     });
 
-    // Botão "Não" volta para home
-    btnNao.addEventListener("click", () => {
-        window.location.href = "index.html";
+    // salva mensagem em "mensagens"
+    await addDoc(collection(db, "mensagens"), {
+      produto: produto,
+      nome: nome,
+      mensagem: mensagem,
+      timestamp: new Date().toISOString()
     });
 
-    // Enviar mensagem + registrar compra
-    btnEnviar.addEventListener("click", async () => {
-        const nome = document.getElementById("nome").value.trim();
-        const mensagem = document.getElementById("mensagem").value.trim();
-
-        if (!nome || !mensagem) {
-            alert("Preencha seu nome e a mensagem!");
-            return;
-        }
-
-        // Salvar compra
-        await setDoc(doc(db, "produtos", produto), {
-            comprado: true,
-            comprador: nome,
-            data: new Date().toISOString()
-        });
-
-        // Registrar mensagem
-        await addDoc(collection(db, "mensagens"), {
-            produto: produto,
-            nome: nome,
-            mensagem: mensagem,
-            data: new Date().toISOString()
-        });
-
-        // Mensagem linda de agradecimento
-        alert("Obrigado por fazer parte desse nosso sonho! ❤️💛");
-
-        // Redirecionar
-        window.location.href = "index.html";
+    // registra um evento no histórico
+    await addDoc(collection(db, "historico"), {
+      evento: `${nome} comprou "${produto}" e enviou mensagem.`,
+      produto: produto,
+      nome: nome,
+      mensagem: mensagem,
+      timestamp: new Date().toISOString()
     });
-});
+
+    // feedback bonito (alert + redireciona em 1.6s)
+    alert("Obrigado por fazer parte desse nosso Sonho! ❤️🥰");
+    window.location.href = "index.html";
+
+  } catch (err) {
+    console.error("Erro ao enviar mensagem:", err);
+    alert("Ocorreu um erro ao enviar. Tente novamente.");
+    $id("btnEnviar").disabled = false;
+    $id("btnEnviar").innerText = "Enviar Mensagem";
+  }
+}

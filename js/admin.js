@@ -1,119 +1,82 @@
-// js/admin.js
 import { auth, onAuthStateChanged, db } from "./firebase.js";
-import {
-  doc,
-  updateDoc,
-  deleteDoc,
-  collection,
-  onSnapshot,
-  query,
-  orderBy
+import { 
+  collection, onSnapshot, query, orderBy, updateDoc, doc 
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-// --- Verifica login ---
+// Redireciona se não estiver logado
 onAuthStateChanged(auth, (user) => {
   if (!user) window.location.href = "login.html";
 });
 
-// ---------------------------------------------------------------------
-// 1. LISTA DE PRODUTOS COMPRADOS
-// ---------------------------------------------------------------------
+// -----------------------------
+// LISTA DE PRODUTOS COMPRADOS
+// -----------------------------
+const qProdutos = query(collection(db, "produtos"));
 
-const prodQuery = query(collection(db, "produtos"));
-onSnapshot(prodQuery, (snap) => {
+onSnapshot(qProdutos, (snap) => {
   const box = document.getElementById("listaComprados");
   box.innerHTML = "";
 
   snap.forEach((docSnap) => {
     const d = docSnap.data();
 
-    if (d.comprado === true) {
-      box.innerHTML += `
-        <div class="admin-item">
-          <b>${d.produto}</b><br>
-          Comprado por: ${d.comprador}<br>
-          <button class="undo-btn" onclick="desfazerCompra('${docSnap.id}')">
-            Desfazer compra
-          </button>
-        </div>
-      `;
-    }
+    if (!d.comprado) return; // só mostra comprados
+
+    box.innerHTML += `
+      <div class="admin-item">
+        <b>${d.produto}</b> — comprado por ${d.comprador}
+        <button onclick="reverter('${docSnap.id}')">Desfazer</button>
+      </div>
+    `;
   });
 });
 
-// Função global p/ desfazer compra
-window.desfazerCompra = async function (produtoID) {
-  if (!confirm("Tem certeza que deseja marcar este produto como disponível novamente?")) return;
-
-  try {
-    await updateDoc(doc(db, "produtos", produtoID), {
-      comprado: false,
-      comprador: null
-    });
-
-    // Adiciona registro no histórico
-    await addHistorico(`O item "${produtoID}" foi marcado como disponível novamente.`);
-
-    alert("Item marcado como disponível!");
-  } catch (e) {
-    console.error("Erro ao desfazer compra:", e);
-    alert("Erro ao desfazer compra.");
-  }
-};
-
-// ---------------------------------------------------------------------
-// 2. LISTA DE MENSAGENS
-// ---------------------------------------------------------------------
-
-const msgQuery = query(collection(db, "mensagens"), orderBy("timestamp", "desc"));
-onSnapshot(msgQuery, (snap) => {
+// -----------------------------
+// MENSAGENS
+// -----------------------------
+const qMensagens = query(collection(db, "mensagens"), orderBy("timestamp", "desc"));
+onSnapshot(qMensagens, (snap) => {
   const box = document.getElementById("listaMensagens");
   box.innerHTML = "";
-
   snap.forEach((docSnap) => {
     const d = docSnap.data();
     box.innerHTML += `
       <div class="admin-item">
-        <b>${d.nome}</b> sobre <i>${d.produto}</i>:<br>
-        ${d.mensagem}
-      </div>
-    `;
+        <b>${d.nome}:</b> ${d.mensagem}
+      </div>`;
   });
 });
 
-// ---------------------------------------------------------------------
-// 3. HISTÓRICO
-// ---------------------------------------------------------------------
-
-const histQuery = query(collection(db, "historico"), orderBy("timestamp", "desc"));
-onSnapshot(histQuery, (snap) => {
+// -----------------------------
+// HISTÓRICO
+// -----------------------------
+const qHistorico = query(collection(db, "historico"), orderBy("timestamp", "desc"));
+onSnapshot(qHistorico, (snap) => {
   const box = document.getElementById("listaHistorico");
   box.innerHTML = "";
-
   snap.forEach((docSnap) => {
     const d = docSnap.data();
-    box.innerHTML += `
-      <div class="admin-item">
-        ${d.evento} <br>
-        <small>${new Date(d.timestamp).toLocaleString("pt-BR")}</small>
-      </div>
-    `;
+    box.innerHTML += `<div class="admin-item">${d.evento}</div>`;
   });
 });
 
-// Função para registrar histórico
-async function addHistorico(evento) {
-  const col = collection(db, "historico");
-  await addDoc(col, {
-    evento: evento,
+// -----------------------------
+// REVERTER PRODUTO
+// -----------------------------
+window.reverter = async function (produtoID) {
+  if (!confirm("Deseja realmente reverter este produto para disponível?")) return;
+
+  const ref = doc(db, "produtos", produtoID);
+  await updateDoc(ref, {
+    comprado: false,
+    comprador: "",
     timestamp: new Date().toISOString()
   });
-}
 
-// ---------------------------------------------------------------------
-// 4. LOGOUT
-// ---------------------------------------------------------------------
+  alert("Produto revertido!");
+};
 
+// LOGOUT
 window.logout = function () {
   auth.signOut();
 };

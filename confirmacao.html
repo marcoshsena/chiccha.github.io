@@ -5,10 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Confirmação de Presente</title>
   <link rel="stylesheet" href="style.css">
-
-  <!-- Firebase + lógica -->
-  <script type="module" src="js/firebase.js"></script>
-  <script type="module" src="js/confirmacao.js"></script>
 </head>
 
 <body>
@@ -39,13 +35,12 @@
         type="text" 
         id="nome" 
         placeholder="Seu nome">
-
+      
       <textarea 
         id="mensagem"
         placeholder="Escreva uma mensagem bonita para o casal..."></textarea>
 
       <button id="btnEnviar">Enviar Mensagem</button>
-
     </div>
 
   </div>
@@ -55,6 +50,9 @@
   © 2025 HomeGift - Casa Nova
 </footer>
 
+<!-- IMPORTS CORRETOS -->
+<script type="module" src="js/firebase.js"></script>
+<script type="module" src="js/confirmacao.js"></script>
+
 </body>
 </html>
-

@@ -1,4 +1,4 @@
-// Import SDK via CDN
+// firebase.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { 
   getAuth, 
@@ -6,10 +6,10 @@ import {
   onAuthStateChanged 
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { 
-  initializeFirestore 
+  getFirestore
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-// Config Firebase
+// Config
 const firebaseConfig = {
   apiKey: "AIzaSyDw1C5HUtpHXD6Q-xdmV2lwvvEVcndLD4w",
   authDomain: "chiccha-a1c87.firebaseapp.com",
@@ -24,11 +24,7 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
-// 🔥 AQUI É A PARTE IMPORTANTE
-export const db = initializeFirestore(app, {
-  databaseId: "chiccha"  // <-- SEU BANCO NÃO PADRÃO
-});
+// BANCO DEFAULT — OBRIGATÓRIO
+export const db = getFirestore(app);
 
-// Exporta funções
 export { signInWithEmailAndPassword, onAuthStateChanged };
-

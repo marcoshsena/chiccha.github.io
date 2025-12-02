@@ -7,14 +7,18 @@ onAuthStateChanged(auth, (user) => {
   if (!user) window.location.href = "login.html";
 });
 
-const qComprados = query(collection(db, "produtos"), orderBy("timestamp", "desc"));
+// LISTA DE PRODUTOS COMPRADOS
+const qComprados = query(collection(db, "produtos"));
 onSnapshot(qComprados, (snap) => {
   const box = document.getElementById("listaComprados");
   box.innerHTML = "";
-  snap.forEach((doc) => {
-    const d = doc.data();
+  snap.forEach((docSnap) => {
+    const d = docSnap.data();
     if (d.comprado) {
-      box.innerHTML += `<div class="admin-item">${doc.id} — por ${d.comprador || d.nome}</div>`;
+      box.innerHTML += `
+        <div class="admin-item">
+          <b>${d.produto}</b> — comprado por <b>${d.comprador}</b>
+        </div>`;
     }
   });
 });

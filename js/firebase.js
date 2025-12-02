@@ -1,15 +1,25 @@
-// firebase.js
+// Import SDK via CDN
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { 
-  getAuth, 
-  signInWithEmailAndPassword, 
-  onAuthStateChanged 
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { 
-  getFirestore
+
+import {
+  initializeFirestore,
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  addDoc,
+  updateDoc,
+  serverTimestamp,
+  onSnapshot,
+  query,
+  orderBy
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-// Config
 const firebaseConfig = {
   apiKey: "AIzaSyDw1C5HUtpHXD6Q-xdmV2lwvvEVcndLD4w",
   authDomain: "chiccha-a1c87.firebaseapp.com",
@@ -24,7 +34,23 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
-// BANCO DEFAULT — OBRIGATÓRIO
-export const db = getFirestore(app);
+// 🔥 FIRESTORE USANDO DATABASE PERSONALIZADO
+export const db = initializeFirestore(app, {
+  databaseId: "chiccha"
+});
 
-export { signInWithEmailAndPassword, onAuthStateChanged };
+// REEXPORTA TUDO
+export {
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  addDoc,
+  updateDoc,
+  serverTimestamp,
+  onSnapshot,
+  query,
+  orderBy
+};

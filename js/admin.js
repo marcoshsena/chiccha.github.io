@@ -1,34 +1,49 @@
-import { db } from "./firebase.js";
-import { collection, getDocs } 
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { auth, onAuthStateChanged, db } from "./firebase.js";
+import { 
+  collection, onSnapshot, query, orderBy 
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-// Produtos comprados
-async function carregarCompras() {
-    const comprasDiv = document.getElementById("listaCompras");
-    const snap = await getDocs(collection(db, "produtos"));
+onAuthStateChanged(auth, (user) => {
+  if (!user) window.location.href = "login.html";
+});
 
-    snap.forEach(doc => {
-        const p = doc.data();
-        if (p.comprado) {
-            comprasDiv.innerHTML += `
-                <p><strong>${doc.id}</strong> — comprado por <strong>${p.comprador}</strong></p>
-            `;
-        }
-    });
-}
+// LISTA DE PRODUTOS COMPRADOS
+const qComprados = query(collection(db, "comprados"));
+onSnapshot(qComprados, (snap) => {
+  const box = document.getElementById("listaComprados");
+  box.innerHTML = "";
+  snap.forEach((doc) => {
+    const d = doc.data();
+    box.innerHTML += `<div class="admin-item">${d.produto} — por ${d.nome}</div>`;
+  });
+});
 
-// Mensagens
-async function carregarMensagens() {
-    const msgDiv = document.getElementById("listaMensagens");
-    const snap = await getDocs(collection(db, "mensagens"));
+// MENSAGENS
+const qMensagens = query(collection(db, "mensagens"), orderBy("timestamp", "desc"));
+onSnapshot(qMensagens, (snap) => {
+  const box = document.getElementById("listaMensagens");
+  box.innerHTML = "";
+  snap.forEach((doc) => {
+    const d = doc.data();
+    box.innerHTML += `
+      <div class="admin-item">
+        <b>${d.nome}:</b> ${d.mensagem}
+      </div>`;
+  });
+});
 
-    snap.forEach(doc => {
-        const m = doc.data();
-        msgDiv.innerHTML += `
-            <p><strong>${m.nome}</strong> sobre <em>${m.produto}</em>: ${m.mensagem}</p>
-        `;
-    });
-}
+// HISTÓRICO
+const qHistorico = query(collection(db, "historico"), orderBy("timestamp", "desc"));
+onSnapshot(qHistorico, (snap) => {
+  const box = document.getElementById("listaHistorico");
+  box.innerHTML = "";
+  snap.forEach((doc) => {
+    const d = doc.data();
+    box.innerHTML += `<div class="admin-item">${d.evento}</div>`;
+  });
+});
 
-carregarCompras();
-carregarMensagens();
+// LOGOUT
+window.logout = function () {
+  auth.signOut();
+};

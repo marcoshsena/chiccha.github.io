@@ -93,7 +93,6 @@ window.reverter = async function (produtoID) {
     timestamp: new Date()
   });
 
-  // Adiciona ao histórico
   await addDoc(collection(db, "historico"), {
     evento: `Produto revertido: ${produtoID}`,
     timestamp: new Date()
@@ -110,3 +109,4 @@ window.logout = function () {
     window.location.href = "login.html";
   });
 };
+

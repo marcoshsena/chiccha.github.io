@@ -1,4 +1,15 @@
-import { auth, onAuthStateChanged, db } from "./firebase.js";
+import { 
+  auth, 
+  onAuthStateChanged, 
+  db,
+  collection,
+  onSnapshot,
+  query,
+  orderBy,
+  updateDoc,
+  doc,
+  addDoc
+} from "./firebase.js";
 import { 
   collection,
   onSnapshot,

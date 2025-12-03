@@ -1,6 +1,13 @@
+// js/admin.js
 import { auth, onAuthStateChanged, db } from "./firebase.js";
 import { 
-  collection, onSnapshot, query, orderBy, updateDoc, doc 
+  collection,
+  onSnapshot,
+  query,
+  orderBy,
+  updateDoc,
+  addDoc,
+  doc
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // ----------------------------------------------------
@@ -85,8 +92,7 @@ window.reverter = async function (produtoID) {
   });
 
   // adiciona no histórico
-  const refHist = collection(db, "historico");
-  await addDoc(refHist, {
+  await addDoc(collection(db, "historico"), {
     evento: `Produto revertido: ${produtoID}`,
     timestamp: new Date()
   });

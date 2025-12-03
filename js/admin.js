@@ -1,4 +1,3 @@
-// js/admin.js
 import { auth, onAuthStateChanged, db } from "./firebase.js";
 import { 
   collection,
@@ -6,15 +5,18 @@ import {
   query,
   orderBy,
   updateDoc,
-  addDoc,
-  doc
+  doc,
+  addDoc
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // ----------------------------------------------------
 // 1) REDIRECIONAR SE NÃO ESTIVER LOGADO
 // ----------------------------------------------------
 onAuthStateChanged(auth, (user) => {
-  if (!user) window.location.href = "login.html";
+  if (!user) {
+    console.log("Usuário não logado → redirecionando");
+    window.location.href = "login.html";
+  }
 });
 
 // ----------------------------------------------------
@@ -29,7 +31,7 @@ onSnapshot(qProdutos, (snap) => {
   snap.forEach((docSnap) => {
     const d = docSnap.data();
 
-    if (!d.comprado) return; // só exibe os comprados
+    if (!d.comprado) return;
 
     box.innerHTML += `
       <div class="admin-item">
@@ -78,7 +80,7 @@ onSnapshot(qHistorico, (snap) => {
 });
 
 // ----------------------------------------------------
-// 5) FUNÇÃO PARA REVERTER PRODUTO PARA DISPONÍVEL
+// 5) FUNÇÃO PARA REVERTER PRODUTO
 // ----------------------------------------------------
 window.reverter = async function (produtoID) {
   if (!confirm("Deseja realmente reverter este produto para ficar disponível novamente?")) return;
@@ -91,7 +93,7 @@ window.reverter = async function (produtoID) {
     timestamp: new Date()
   });
 
-  // adiciona no histórico
+  // Adiciona ao histórico
   await addDoc(collection(db, "historico"), {
     evento: `Produto revertido: ${produtoID}`,
     timestamp: new Date()
@@ -104,5 +106,7 @@ window.reverter = async function (produtoID) {
 // 6) LOGOUT
 // ----------------------------------------------------
 window.logout = function () {
-  auth.signOut();
+  auth.signOut().then(() => {
+    window.location.href = "login.html";
+  });
 };

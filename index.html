@@ -48,6 +48,14 @@
         <option value="sala">Sala de Estar</option>
         <option value="quarto">Quarto</option>
     </select>
+
+    <select id="sortFilter" onchange="filterProducts()">
+        <option value="default">Ordenar</option>
+        <option value="az">Nome A → Z</option>
+        <option value="za">Nome Z → A</option>
+        <option value="disponivel">Somente Disponíveis</option>
+        <option value="indisponivel">Somente Indisponíveis</option>
+    </select>
 </section>
 
 <section class="produtos" id="lista">
@@ -231,13 +239,19 @@
 </footer>
 
 <script>
-function filterProducts() {
+async function filterProducts() {
     const search = document.getElementById("search").value.toLowerCase();
     const category = document.getElementById("categoryFilter").value;
-    const cards = document.querySelectorAll(".card");
+    const sort = document.getElementById("sortFilter").value;
+    const grid = document.getElementById("productGrid");
 
+    let cards = Array.from(document.querySelectorAll(".card"));
+
+    // ---------------------------
+    // 1) FILTRO DE NOME E CATEGORIA
+    // ---------------------------
     cards.forEach(card => {
-        const name = card.getAttribute("data-name");
+        const name = card.getAttribute("data-name").toLowerCase();
         const cat = card.getAttribute("data-category");
 
         const matchName = name.includes(search);
@@ -245,6 +259,38 @@ function filterProducts() {
 
         card.style.display = matchName && matchCategory ? "block" : "none";
     });
+
+    // ---------------------------
+    // 2) FILTRO DISPONÍVEL / INDISPONÍVEL
+    // ---------------------------
+    if (sort === "disponivel" || sort === "indisponivel") {
+        cards.forEach(card => {
+            const isUnavailable = card.classList.contains("produto_indisponivel");
+
+            if (sort === "disponivel" && isUnavailable) {
+                card.style.display = "none";
+            }
+            if (sort === "indisponivel" && !isUnavailable) {
+                card.style.display = "none";
+            }
+        });
+    }
+
+    // ---------------------------
+    // 3) ORDENAÇÃO ALFABÉTICA
+    // ---------------------------
+    if (sort === "az" || sort === "za") {
+        cards.sort((a, b) => {
+            const nameA = a.getAttribute("data-name").toLowerCase();
+            const nameB = b.getAttribute("data-name").toLowerCase();
+
+            if (sort === "az") return nameA.localeCompare(nameB);
+            else return nameB.localeCompare(nameA);
+        });
+
+        // Reorganiza visualmente
+        cards.forEach(card => grid.appendChild(card));
+    }
 }
 </script>
 

@@ -373,3 +373,46 @@ footer {
   opacity: 1;
   transform: scale(1);
 }
+
+/* CARD DO VÍDEO TUTORIAL */
+.video-card {
+    background: #ffffff;
+    width: 400px;                    /* 🔥 igual ao card do endereço */
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.12);
+    text-align: center;
+    margin: 40px auto;
+}
+
+.video-card p {
+    font-size: 15px;
+    color: #444;
+    margin-bottom: 16px;
+    line-height: 1.45;
+    font-weight: 500;
+}
+
+.video-card .video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;          /* mantém proporção 16:9 */
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.video-card iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+    .video-card {
+        width: 90%;                  /* adapta no celular */
+    }
+}

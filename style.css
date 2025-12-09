@@ -374,17 +374,19 @@ footer {
   transform: scale(1);
 }
 
-/* CARD DO VÍDEO TUTORIAL */
+/* VIDEO CARD — ajustar para ter mesma largura do .instrucao-endereco */
 .video-card {
     background: #ffffff;
-    width: 400px;                    /* 🔥 igual ao card do endereço */
+    width: 100%;
+    max-width: 700px;               /* MESMA largura máxima do .instrucao-endereco */
     padding: 20px;
     border-radius: 16px;
     box-shadow: 0 4px 18px rgba(0,0,0,0.12);
     text-align: center;
-    margin: 40px auto;
+    margin: 20px auto 10px;         /* mesmos espaçamentos do card das instruções */
 }
 
+/* manter tipografia e container do vídeo */
 .video-card p {
     font-size: 15px;
     color: #444;
@@ -411,8 +413,9 @@ footer {
 }
 
 /* Responsivo */
-@media (max-width: 480px) {
+@media (max-width: 700px) {
     .video-card {
-        width: 90%;                  /* adapta no celular */
+        padding: 18px;
+        margin: 16px auto;
     }
 }

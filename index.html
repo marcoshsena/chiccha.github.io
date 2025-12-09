@@ -23,25 +23,46 @@
     <p>Escolha um presente especial para ajudar a montar o novo lar!</p>
 </section>
 
-<!-- VÍDEO DE APRESENTAÇÃO (PEQUENO + LOOP) -->
-<section class="video-apresentacao" style="text-align:center; margin: 30px 0;">
+<!-- CARD DO VÍDEO DE TUTORIAL -->
+<section class="video-apresentacao" style="display:flex; justify-content:center; margin:40px 0;">
     <div style="
-        position: relative; 
-        width: 320px; 
-        max-width: 90%; 
-        margin: 0 auto;
-        padding-bottom: 180px; /* controla altura do vídeo */
-        overflow: hidden; 
-        border-radius: 12px;">
-        
-        <iframe 
-            src="https://www.youtube.com/embed/ETpUsAV8m-Y?autoplay=1&mute=1&loop=1&playlist=ETpUsAV8m-Y" 
-            title="Vídeo de Apresentação" 
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            allowfullscreen
-            style="position:absolute; top:0; left:0; width:100%; height:100%; border-radius:12px;">
-        </iframe>
+        background:#ffffff;
+        width:350px;
+        padding:18px;
+        border-radius:16px;
+        box-shadow:0 4px 18px rgba(0,0,0,0.12);
+        text-align:center;
+    ">
+
+        <!-- Mensagem explicativa -->
+        <p style="
+            font-size:15px; 
+            color:#444; 
+            margin-bottom:14px; 
+            line-height:1.4;
+            font-weight:500;
+        ">
+            Caso desejem nos presentear, após serem redirecionados ao site para compra, lembre de retornar à nossa página para a confirmação da compra do presente! ;D
+        </p>
+
+        <!-- Container do vídeo -->
+        <div style="
+            position:relative; 
+            width:100%; 
+            padding-bottom:56.25%; 
+            overflow:hidden; 
+            border-radius:12px;
+        ">
+            <iframe 
+                src="https://www.youtube.com/embed/ETpUsAV8m-Y?autoplay=1&mute=1&loop=1&playlist=ETpUsAV8m-Y" 
+                title="Vídeo Tutorial" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen
+                style="position:absolute; top:0; left:0; width:100%; height:100%; border-radius:12px;">
+            </iframe>
+        </div>
+
     </div>
 </section>
 
